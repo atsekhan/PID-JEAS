@@ -7,13 +7,13 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
-import frc.robot.commands.DriveSingleMotorCommand;
+import frc.robot.commands.DriveMotorsCommand;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.MoveRobotCommand;
-import frc.robot.commands.MoveRobotInstantCommand;
+import frc.robot.commands.HardwarePIDMeterCommand;
+import frc.robot.commands.MoveRobotMeterCommand;
 import frc.robot.commands.OneMeterForward;
 import frc.robot.commands.StopRobot;
-import frc.robot.commands.StopSingleMotorCommand;
+import frc.robot.commands.StopMotorsCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
@@ -79,8 +79,15 @@ public class RobotContainer {
         .onFalse(new StopRobot());
 
     new JoystickButton(joystick, 10)
-        .onTrue(new MoveRobotCommand())
+        .onTrue(new MoveRobotMeterCommand())
         .onFalse(new StopRobot());
+    new JoystickButton(joystick, 1)
+        .onTrue(new MoveRobotMeterCommand())
+        .onFalse(new StopMotorsCommand());
+
+    new JoystickButton(joystick, 2)
+        .onTrue(new HardwarePIDMeterCommand())
+        .onFalse(new StopMotorsCommand());
 
   }
 

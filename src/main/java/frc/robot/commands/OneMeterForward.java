@@ -40,9 +40,7 @@ public class OneMeterForward extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //RobotContainer.driveSubsystem.robotDrive(pid.calculate(RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition(), endPos),0);
-    
-    double encoder = RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition();
+    //double encoder = RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition();
     double p = pid.calculate(RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition(), endPos);
     //System.out.println("Encoder value: " + encoder + " Power: " + p + " End pos " + endPos);
     RobotContainer.driveSubsystem.robotDrive(p,0);

@@ -14,7 +14,11 @@ package frc.robot;
  */
 public final class Constants {
 
-  public static final double cruisingSpeed = .85;
+  public static final double maxVelocity = 55; //in ticks/second. Normal speed is .58
+  public static final double maxAcceleration = 200;
+  public static final double nominalVoltage = 12;
+  public static final double rampRate = 0.5;
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
