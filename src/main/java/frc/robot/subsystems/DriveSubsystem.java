@@ -4,13 +4,16 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.ClosedLoopConfig;
+import com.revrobotics.spark.config.SignalsConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -25,11 +28,15 @@ import frc.robot.RobotContainer;
 
 public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
-  public static DifferentialDrive chassis;
-  public static SparkMax leftMotor;
-  public static SparkMax rightMotor;
-  public static SparkMaxConfig configRight = new SparkMaxConfig();
-  public static SparkMaxConfig configLeft = new SparkMaxConfig();
+  private static DifferentialDrive chassis;
+  private static SparkMax leftMotor;
+  private static SparkMax rightMotor;
+  private static SparkMaxConfig configRight;
+  private static SparkMaxConfig configLeft;
+
+  private RelativeEncoder leftMotorEncoder; 
+  private RelativeEncoder rightMotorEncoder;
+
 
   private SparkClosedLoopController leftPIDController;
   private SparkClosedLoopController rightPIDController;
@@ -37,6 +44,12 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem() {
     leftMotor = new SparkMax(57, MotorType.kBrushless);
     rightMotor = new SparkMax(54, MotorType.kBrushless);
+
+    leftMotorEncoder = leftMotor.getEncoder();
+    rightMotorEncoder = rightMotor.getEncoder();
+
+    configRight = new SparkMaxConfig();
+    configLeft = new SparkMaxConfig();
 
     configurePID();
     configureMotors();
@@ -48,7 +61,6 @@ public class DriveSubsystem extends SubsystemBase {
   private void configurePID() {
     leftPIDController = leftMotor.getClosedLoopController();
     rightPIDController = rightMotor.getClosedLoopController();
-    // configRight.voltageCompensation(Constants.nominalVoltage);
     configLeft.voltageCompensation(Constants.nominalVoltage);
     configRight.voltageCompensation(Constants.nominalVoltage);
 
@@ -57,11 +69,37 @@ public class DriveSubsystem extends SubsystemBase {
     configRight.openLoopRampRate(Constants.rampRate);
     configRight.closedLoopRampRate(Constants.rampRate);
 
+    SignalsConfig signalsConfigLeft = new SignalsConfig();
+    SignalsConfig signalsConfigRight = new SignalsConfig();
+
+     // kstatus1
+    signalsConfigLeft.motorTemperaturePeriodMs(50);
+    signalsConfigLeft.primaryEncoderVelocityPeriodMs(10);
+
+    // kstatus2
+    signalsConfigLeft.primaryEncoderPositionPeriodMs(10);
+
+    // kstatus1
+    signalsConfigRight.motorTemperaturePeriodMs(50);
+    signalsConfigRight.primaryEncoderVelocityPeriodMs(10);
+
+    // kstatus2
+    signalsConfigRight.primaryEncoderPositionPeriodMs(10);
+
+    configRight.apply(signalsConfigRight);
+    configLeft.apply(signalsConfigLeft);
+
+    leftMotor.setCANTimeout(0);
+    rightMotor.setCANTimeout(0);
+
+
+
+
     ClosedLoopConfig closedLoopConfig = new ClosedLoopConfig();
     closedLoopConfig.p(PIDConstants.kP);
     closedLoopConfig.i(PIDConstants.kI);
     closedLoopConfig.d(PIDConstants.kD);
-    closedLoopConfig.outputRange(-1, 1);
+    closedLoopConfig.outputRange(-0.6, 0.6);
     configLeft.apply(closedLoopConfig);
     configRight.apply(closedLoopConfig);
   }
@@ -90,6 +128,35 @@ public class DriveSubsystem extends SubsystemBase {
     rightMotor.set(0);
     leftMotor.set(0);
   }
+
+  public static SparkMax getLeftMotor() {
+    return leftMotor;
+  }
+
+  public static SparkMax getRightMotor() {
+    return rightMotor;
+  }
+
+  public double getLeftMotorEncoder() {
+    return leftMotor.getEncoder().getPosition();
+  }
+
+  public double getRightMotorEncoder() {
+    return rightMotor.getEncoder().getPosition();
+  }
+
+  public void SetLeftMotorPID(double pos) {
+
+    System.out.print("LP:"+pos);
+    leftPIDController.setReference(pos, ControlType.kPosition);
+  }
+  
+  public void SetRightMotorPID(double pos) {
+    rightPIDController.setReference(pos, ControlType.kPosition);
+  }
+  
+
+  
 
   @Override
   public void periodic() {

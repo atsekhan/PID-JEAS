@@ -31,7 +31,7 @@ public class OneMeterForward extends Command {
   @Override
   public void initialize() {
     System.out.println("starting forward");
-    startPos = RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition(); // Gets values to move at
+    startPos = RobotContainer.driveSubsystem.getLeftMotorEncoder(); // Gets values to move at
     endPos = startPos + 20; // 20 encoder ticks is 1 meter
     System.out.println("StarPos: " + startPos + "endPos: " + endPos);
 
@@ -41,7 +41,7 @@ public class OneMeterForward extends Command {
   @Override
   public void execute() {
     //double encoder = RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition();
-    double p = pid.calculate(RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition(), endPos);
+    double p = pid.calculate(RobotContainer.driveSubsystem.getLeftMotorEncoder());
     //System.out.println("Encoder value: " + encoder + " Power: " + p + " End pos " + endPos);
     RobotContainer.driveSubsystem.robotDrive(p,0);
   }
@@ -57,6 +57,6 @@ public class OneMeterForward extends Command {
   @Override
   public boolean isFinished() {
     //System.out.println("FINISHED WOOO");
-    return (Math.abs(RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition() - endPos) < tolerance);
+    return (Math.abs(RobotContainer.driveSubsystem.getLeftMotorEncoder() - endPos) < tolerance);
   }
 }

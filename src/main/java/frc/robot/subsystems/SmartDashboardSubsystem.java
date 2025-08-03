@@ -18,8 +18,8 @@ public class SmartDashboardSubsystem extends SubsystemBase {
     //SmartDashboard.putNumber("Motor Power: ", DriveSubsystem.getMotorVoltage());
     // SmartDashboard.putNumber("Y axis: ", DriveManuallyCommand.move);
     // SmartDashboard.putNumber("X axis: ", DriveManuallyCommand.turn);
-    SmartDashboard.putNumber("Left Encoder: ", DriveSubsystem.leftMotor.getEncoder().getPosition());
-    SmartDashboard.putNumber("Right Encoder: ", DriveSubsystem.rightMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("Left Encoder: ", DriveSubsystem.getLeftMotor().getEncoder().getPosition());
+    SmartDashboard.putNumber("Right Encoder: ", DriveSubsystem.getRightMotor().getEncoder().getPosition());
 
   }
 }

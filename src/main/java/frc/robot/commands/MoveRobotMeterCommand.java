@@ -41,7 +41,7 @@ public class MoveRobotMeterCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    startPos = RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition();
+    startPos = RobotContainer.driveSubsystem.getLeftMotorEncoder();
     endPos = startPos + 40;
     RobotContainer.driveSubsystem.robotDrive(.5,0);
     startState = new TrapezoidProfile.State(startPos, 0);
@@ -64,12 +64,12 @@ public class MoveRobotMeterCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("Drive ended: " + interrupted + "\n Current encoder: " + RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition());
+    System.out.println("Drive ended: " + interrupted + "\n Current encoder: " + RobotContainer.driveSubsystem.getLeftMotorEncoder());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition() - endPos) < tolerance);
+    return (Math.abs(RobotContainer.driveSubsystem.getLeftMotorEncoder() - endPos) < tolerance);
   }
 }

@@ -35,11 +35,11 @@ public class HardwarePIDMeterCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    leftStartPos = RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition(); // Gets values to move at
+    leftStartPos = RobotContainer.driveSubsystem.getLeftMotorEncoder(); // Gets values to move at
     leftEndPos = leftStartPos + 20; // 20 encoder ticks is 1 meter
 
-    rightStartPos = RobotContainer.driveSubsystem.rightMotor.getEncoder().getPosition(); // Gets values to move at
-    rightEndPos = rightStartPos + 20; // 20 encoder ticks is 1 meter
+    rightStartPos = RobotContainer.driveSubsystem.getRightMotorEncoder();
+    rightEndPos = rightStartPos + 20;
 
   }
 
@@ -52,12 +52,12 @@ public class HardwarePIDMeterCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("Drive ended: " + interrupted + "\n Current encoder: " + RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition());
+    System.out.println("Drive ended: " + interrupted + "\n Current encoder: " + RobotContainer.driveSubsystem.getLeftMotorEncoder());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition() - leftEndPos) < tolerance);
+    return (Math.abs(RobotContainer.driveSubsystem.getLeftMotorEncoder() - leftEndPos) < tolerance);
   }
 }

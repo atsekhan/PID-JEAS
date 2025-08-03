@@ -9,9 +9,12 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.DriveMotorsCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Go20;
+import frc.robot.commands.GoLeft20;
 import frc.robot.commands.HardwarePIDMeterCommand;
 import frc.robot.commands.MoveRobotMeterCommand;
 import frc.robot.commands.OneMeterForward;
+import frc.robot.commands.StopDriveMotors;
 import frc.robot.commands.StopRobot;
 import frc.robot.commands.StopMotorsCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -47,12 +50,12 @@ public class RobotContainer {
 
     
 
-    driveSubsystem.setDefaultCommand(
-      new DriveManuallyCommand(
-      ()->joystick.getX()
-      ,
-      ()->joystick.getY()*-1
-    ));
+    // driveSubsystem.setDefaultCommand(
+    //   new DriveManuallyCommand(
+    //   ()->joystick.getX()
+    //   ,
+    //   ()->joystick.getY()*-1
+    // ));
   }
 
   /**
@@ -88,6 +91,10 @@ public class RobotContainer {
     new JoystickButton(joystick, 2)
         .onTrue(new HardwarePIDMeterCommand())
         .onFalse(new StopMotorsCommand());
+
+    new JoystickButton(joystick, 9)
+        .onTrue(new Go20())
+        .onFalse(new StopDriveMotors());
 
   }
 
