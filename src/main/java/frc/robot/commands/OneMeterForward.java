@@ -34,7 +34,6 @@ public class OneMeterForward extends Command {
     startPos = RobotContainer.driveSubsystem.getLeftMotorEncoder(); // Gets values to move at
     endPos = startPos + 20; // 20 encoder ticks is 1 meter
     System.out.println("StarPos: " + startPos + "endPos: " + endPos);
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,7 +42,7 @@ public class OneMeterForward extends Command {
     //double encoder = RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition();
     double p = pid.calculate(RobotContainer.driveSubsystem.getLeftMotorEncoder());
     //System.out.println("Encoder value: " + encoder + " Power: " + p + " End pos " + endPos);
-    RobotContainer.driveSubsystem.robotDrive(p,0);
+    RobotContainer.driveSubsystem.robotDrive(p, 0);
   }
 
   // Called once the command ends or is interrupted.

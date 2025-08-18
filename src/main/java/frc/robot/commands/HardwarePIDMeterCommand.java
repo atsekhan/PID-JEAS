@@ -17,9 +17,7 @@ import frc.robot.Constants.PIDConstants;
 import frc.robot.RobotContainer;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class HardwarePIDMeterCommand extends Command {  
-  private SparkClosedLoopController leftPIDController;
-  private SparkClosedLoopController rightPIDController;
+public class HardwarePIDMeterCommand extends Command { 
   public double leftStartPos;
   public double leftEndPos;
   public double rightStartPos;

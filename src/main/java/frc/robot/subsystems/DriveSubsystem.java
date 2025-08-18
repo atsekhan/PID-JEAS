@@ -114,12 +114,12 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void robotDrive(double moveX, double moveY) {
-    chassis.arcadeDrive(moveX, moveY);
+    chassis.arcadeDrive((moveX), moveY);
   }
 
   public void runMotors() {
-    rightMotor.set(.58);
-    leftMotor.set(.58);
+    rightMotor.set(.18);
+    leftMotor.set(.18);
     double leftEncoder = leftMotor.getEncoder().getPosition(); // Gets values to move at
     System.out.println("Encoder: " + leftEncoder);
   }

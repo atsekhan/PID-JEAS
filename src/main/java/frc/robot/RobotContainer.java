@@ -95,7 +95,6 @@ public class RobotContainer {
     new JoystickButton(joystick, 9)
         .onTrue(new Go20())
         .onFalse(new StopDriveMotors());
-
   }
 
   /**
